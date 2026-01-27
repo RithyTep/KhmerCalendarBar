@@ -22,6 +22,9 @@ if [ -d "${BUILD_DIR}/${APP_NAME}_${APP_NAME}.bundle" ]; then
     cp -R "${BUILD_DIR}/${APP_NAME}_${APP_NAME}.bundle" "${APP_DIR}/Contents/Resources/"
 fi
 
+# Copy app icon
+cp "${APP_NAME}/Resources/AppIcon.icns" "${APP_DIR}/Contents/Resources/AppIcon.icns"
+
 # Create Info.plist
 cat > "${APP_DIR}/Contents/Info.plist" << 'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,6 +45,8 @@ cat > "${APP_DIR}/Contents/Info.plist" << 'PLIST'
     <string>1.0</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>LSUIElement</key>
     <true/>
     <key>LSMinimumSystemVersion</key>
