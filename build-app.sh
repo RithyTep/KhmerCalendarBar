@@ -55,13 +55,24 @@ cat > "${APP_DIR}/Contents/Info.plist" << 'PLIST'
 </plist>
 PLIST
 
-echo "Packaging..."
+echo "Packaging ZIP..."
 rm -f "${APP_NAME}.zip"
 zip -r -q "${APP_NAME}.zip" "${APP_DIR}"
+
+echo "Creating DMG..."
+rm -f "${APP_NAME}.dmg"
+DMG_STAGING="dmg_staging"
+rm -rf "${DMG_STAGING}"
+mkdir -p "${DMG_STAGING}"
+cp -R "${APP_DIR}" "${DMG_STAGING}/"
+ln -s /Applications "${DMG_STAGING}/Applications"
+hdiutil create -volname "${APP_NAME}" -srcfolder "${DMG_STAGING}" -ov -format UDZO "${APP_NAME}.dmg"
+rm -rf "${DMG_STAGING}"
 
 echo ""
 echo "Done!"
 echo "  App:  ${APP_DIR}"
+echo "  DMG:  ${APP_NAME}.dmg"
 echo "  Zip:  ${APP_NAME}.zip"
 echo ""
-echo "To install: unzip ${APP_NAME}.zip && mv ${APP_DIR} /Applications/"
+echo "To install: open ${APP_NAME}.dmg and drag to Applications"
