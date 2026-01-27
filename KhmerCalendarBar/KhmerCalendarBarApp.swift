@@ -7,7 +7,7 @@ struct KhmerCalendarBarApp: App {
     var body: some Scene {
         MenuBarExtra {
             PopoverContentView(viewModel: viewModel)
-                .frame(width: 380, height: 520)
+                .frame(width: 340)
         } label: {
             Text(viewModel.menuBarText)
         }

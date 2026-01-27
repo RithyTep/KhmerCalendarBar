@@ -1,89 +1,145 @@
-# KhmerCalendarBar
+<div align="center">
 
-A native macOS menu bar app that displays the Khmer Chhankitek (ចន្ទគតិ) lunisolar calendar.
+# Khmer Calendar Bar
 
-![KhmerCalendarBar Demo](docs/demo.png)
+**A native macOS menu bar app for the Khmer Chhankitek lunisolar calendar.**
+
+[![macOS](https://img.shields.io/badge/macOS-14.0%2B-000?logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Swift](https://img.shields.io/badge/Swift-5.9-F05138?logo=swift&logoColor=white)](https://swift.org)
+[![SwiftUI](https://img.shields.io/badge/SwiftUI-Framework-007AFF?logo=swift&logoColor=white)](https://developer.apple.com/swiftui/)
+[![License](https://img.shields.io/badge/License-MIT-2E9494)](LICENSE)
+
+[Download DMG](#download) | [Build from Source](#build-from-source) | [Features](#features)
+
+</div>
+
+---
+
+<div align="center">
+  <img src="docs/images/preview.png" alt="Khmer Calendar Bar Preview" width="520">
+  <p><em>Modern Dark Teal theme with Khmer lunar dates, public holidays, and working day status</em></p>
+</div>
+
+---
+
+## Download
+
+### Latest Release
+
+> **[Download KhmerCalendarBar.dmg](https://github.com/RithyTep/KhmerCalendarBar/releases/latest)**
+
+Or download the `.zip` from the [Releases](https://github.com/RithyTep/KhmerCalendarBar/releases) page.
+
+### Install
+
+1. Open `KhmerCalendarBar.dmg`
+2. Drag **Khmer Calendar Bar** to your **Applications** folder
+3. Open from Applications or Spotlight
+4. The calendar icon appears in your menu bar
+
+> **Requires macOS 14.0 Sonoma or later** (Apple Silicon + Intel)
+
+---
 
 ## Features
 
-- **Menu Bar Date** — Shows current Khmer lunar date (e.g. "១កោះមាច បុស្ស")
-- **Monthly Calendar Grid** — Dual Gregorian + Khmer lunar dates
-- **Chhankitek Engine** — Full Gregorian ↔ Khmer lunisolar conversion
-- **Lunar Phases** — កើត (waxing) / រោច (waning) / កោះ (new moon)
+### Calendar
+- **Khmer Chhankitek Engine** — Full Gregorian ↔ Khmer lunisolar date conversion
+- **Dual Calendar Grid** — Gregorian dates with Khmer lunar dates underneath
+- **Lunar Phases** — កើត (waxing) / រោច (waning) display on every day
 - **Buddhist Era** — ពុទ្ធសករាជ year display
-- **Animal Year Cycle** — 12 Khmer animal years (ជូត, ឆ្លូវ, ខាល, ...)
+- **Animal Year Cycle** — 12-year Khmer animal cycle (ជូត, ឆ្លូវ, ខាល, ...)
 - **Sak Era** — 10 Sak cycle (ឯកស័ក, ទោស័ក, ...)
-- **Public Holidays** — Fixed (Gregorian) + lunar-based Khmer holidays
-- **Holiday Indicators** — Red dots on calendar, detailed list below
 - **Khmer Numerals** — Full Unicode Khmer numeral display (០១២៣៤៥៦៧៨៩)
-- **Month Navigation** — Browse past and future months
+
+### Holidays (Cambodian Public Holidays)
+- **Fixed Gregorian holidays** — New Year, Victory Day, Women's Day, Workers' Day, King's Birthday, Constitution Day, Independence Day
+- **Lunar-computed holidays** — Khmer New Year, Visak Bochea, Pchum Ben, Water Festival, Meak Bochea
+- **Holiday indicators** — Coral dots on calendar days, detailed holiday list per month
+- **Next holiday countdown** — Shows upcoming holiday with days remaining
+
+### UX
+- **Working day status** — "ថ្ងៃធ្វើការ" / "ថ្ងៃឈប់សម្រាក" / "ចុងសប្តាហ៍" badge
+- **Modern Dark Teal theme** — Custom color palette (teal, coral, amber)
+- **Spring animations** — Smooth month navigation, hover effects, scale transitions
+- **Month slide transitions** — Directional left/right animation when navigating
+- **Day cell hover** — Interactive scale effect on mouseover
+- **Keyboard shortcuts** — Arrow keys (month), T (today), Escape (deselect)
 - **Launch at Login** — Auto-start on macOS boot
-- **Midnight Refresh** — Automatically updates at midnight
+- **Midnight refresh** — Automatically updates at midnight
+- **Holiday notifications** — macOS notifications for upcoming holidays
 
-## Requirements
+---
 
-- macOS 14.0 (Sonoma) or later
-- Apple Silicon or Intel Mac
+## Build from Source
 
-## Build
+### Prerequisites
+- macOS 14.0+
+- Xcode 15+ or Swift 5.9+ toolchain
+
+### Build
 
 ```bash
+# Clone
+git clone https://github.com/RithyTep/KhmerCalendarBar.git
+cd KhmerCalendarBar
+
 # Debug build
 swift build
 
-# Release build + app bundle
+# Release build + .app bundle + .zip
 ./build-app.sh
 ```
 
-The build script creates `KhmerCalendarBar.app` and `KhmerCalendarBar.zip` for distribution.
-
-## Install
+### Install from Build
 
 ```bash
-# From zip
-unzip KhmerCalendarBar.zip
-mv KhmerCalendarBar.app /Applications/
-
-# Or run directly
-swift run
+cp -R KhmerCalendarBar.app /Applications/
+open /Applications/KhmerCalendarBar.app
 ```
+
+---
 
 ## Architecture
 
 ```
 KhmerCalendarBar/
-├── Models/              # Data models
-│   ├── KhmerDate        # Core Khmer date struct
-│   ├── KhmerMonth       # 12+2 lunar months
-│   ├── KhmerAnimalYear  # 12 animal cycle
-│   ├── KhmerSak         # 10 Sak era cycle
-│   ├── MoonPhase        # Waxing/waning phases
-│   ├── KhmerHoliday     # Holiday model
-│   ├── DayInfo          # Combined day info for grid
-│   └── CalendarConstants# Khmer Unicode strings
-├── Engine/              # Calendar conversion engine
-│   ├── ChhankitekEngine # Main Gregorian ↔ Khmer conversion
-│   ├── AstronomicalCalculations # Aharkun, Bodethey, Avoman
-│   ├── LeapYearCalculator       # Adhikameas/Adhikavar detection
-│   ├── NewYearCalculator        # Khmer New Year computation
-│   ├── MonthNavigator           # Month sequencing with leap
-│   └── JulianDayConverter       # Julian Day Number bridge
-├── Services/            # Business logic
-│   ├── HolidayService          # Fixed + lunar holidays
-│   ├── DateFormatterService    # Khmer date formatting
-│   └── KhmerNumeralService     # Arabic ↔ Khmer numerals
+├── Models/
+│   ├── KhmerDate.swift           # Core Khmer date struct
+│   ├── KhmerMonth.swift          # 12+2 lunar months
+│   ├── KhmerAnimalYear.swift     # 12 animal cycle
+│   ├── KhmerSak.swift            # 10 Sak era cycle
+│   ├── MoonPhase.swift           # Waxing/waning phases
+│   ├── KhmerHoliday.swift        # Holiday model
+│   ├── DayInfo.swift             # Combined day info for grid
+│   ├── CalendarConstants.swift   # Khmer Unicode strings
+│   └── CalendarTheme.swift       # Modern Dark Teal color palette
+├── Engine/
+│   ├── ChhankitekEngine.swift    # Main Gregorian ↔ Khmer conversion
+│   ├── AstronomicalCalculations  # Aharkun, Bodethey, Avoman
+│   ├── LeapYearCalculator        # Adhikameas/Adhikavar detection
+│   ├── NewYearCalculator         # Khmer New Year computation
+│   ├── MonthNavigator            # Month sequencing with leap
+│   └── JulianDayConverter        # Julian Day Number bridge
+├── Services/
+│   ├── HolidayService            # Fixed + lunar holidays
+│   ├── DateFormatterService      # Khmer date formatting
+│   ├── KhmerNumeralService       # Arabic ↔ Khmer numerals
+│   └── NotificationService       # Holiday notifications
 ├── ViewModels/
-│   └── CalendarViewModel       # State + midnight timer
-├── Views/               # SwiftUI views
-│   ├── PopoverContentView      # Main popover layout
-│   ├── TodayHeaderView         # Today's Khmer date
-│   ├── MonthNavigationView     # Month navigation
-│   ├── CalendarGridView        # 7-column calendar grid
-│   ├── DayCellView             # Day cell (dual dates)
-│   ├── HolidayListView         # Monthly holidays
-│   └── FooterView              # Launch at Login, Quit
+│   └── CalendarViewModel         # State + midnight timer + stats
+├── Views/
+│   ├── PopoverContentView        # Main popover layout
+│   ├── TodayHeaderView           # Today header with status
+│   ├── MonthNavigationView       # Month navigation + Today button
+│   ├── CalendarGridView          # 7-column animated grid
+│   ├── DayCellView               # Day cell with hover effects
+│   ├── HolidayListView           # Monthly holidays with dates
+│   └── FooterView                # Launch at Login, Quit
 └── Utilities/
-    └── LaunchAtLogin           # SMAppService wrapper
+    ├── LaunchAtLogin              # SMAppService wrapper
+    ├── CalendarIconGenerator      # App icon generator
+    └── MenuBarIconGenerator       # Menu bar icon
 ```
 
 ## Khmer Calendar Engine
@@ -97,25 +153,18 @@ The Chhankitek engine converts Gregorian dates to Khmer lunar dates using epoch-
 5. **New Year** — Computes exact Moha Songkran date
 6. **Conversion** — Skips full years → skips full months → remaining days = lunar day + phase
 
-## Holidays
+---
 
-**Fixed (Gregorian):**
-- International New Year (Jan 1)
-- Victory over Genocide Day (Jan 7)
-- International Women's Day (Mar 8)
-- International Workers' Day (May 1)
-- King's Birthday (May 13-15)
-- Constitution Day (Sep 24)
-- Independence Day (Nov 9)
+## Contributing
 
-**Lunar-based (computed each year):**
-- Choul Chnam Thmey (Khmer New Year)
-- Visak Bochea
-- Pchum Ben (15-day festival)
-- Water Festival (Bon Om Touk)
-- Meak Bochea
-- Royal Ploughing Ceremony
+Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
-MIT
+[MIT](LICENSE)
+
+---
+
+<div align="center">
+  <sub>Built with SwiftUI for macOS by <a href="https://github.com/RithyTep">RithyTep</a></sub>
+</div>

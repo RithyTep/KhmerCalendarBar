@@ -24,6 +24,10 @@ struct DayInfo: Identifiable, Equatable {
         dayOfWeek == 7
     }
 
+    var isWeekend: Bool {
+        isSunday || isSaturday
+    }
+
     static func == (lhs: DayInfo, rhs: DayInfo) -> Bool {
         lhs.id == rhs.id
     }

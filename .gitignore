@@ -1,4 +1,7 @@
 .build/
 *.zip
 *.app
+*.dmg
 .swiftpm/
+.DS_Store
+.serena/
