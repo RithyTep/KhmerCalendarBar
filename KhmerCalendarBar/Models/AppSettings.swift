@@ -6,6 +6,7 @@ enum MenuBarDisplayFormat: String, CaseIterable, Identifiable {
     case lunarDate = "lunar"
     case khmerFull = "khmerFull"
     case iconOnly = "iconOnly"
+    case englishFull = "englishFull"
 
     var id: String { rawValue }
 
@@ -16,6 +17,7 @@ enum MenuBarDisplayFormat: String, CaseIterable, Identifiable {
         case .lunarDate: return "១កើត ពិសាខ"
         case .khmerFull: return "ថ្ងៃទី២៧ មករា"
         case .iconOnly: return "រូបតំណាងតែប៉ុណ្ណោះ"
+        case .englishFull: return "Jan 27  21:35"
         }
     }
 
@@ -26,6 +28,7 @@ enum MenuBarDisplayFormat: String, CaseIterable, Identifiable {
         case .lunarDate: return "Lunar date"
         case .khmerFull: return "Khmer day + month"
         case .iconOnly: return "Icon only"
+        case .englishFull: return "English date + time"
         }
     }
 }

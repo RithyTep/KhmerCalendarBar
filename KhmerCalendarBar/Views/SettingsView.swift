@@ -130,7 +130,7 @@ struct SettingsView: View {
                     }
 
                     // Version
-                    Text("Version 1.4.0")
+                    Text("Version 1.5.0")
                         .font(.system(size: 9))
                         .foregroundStyle(.quaternary)
                         .padding(.top, 4)

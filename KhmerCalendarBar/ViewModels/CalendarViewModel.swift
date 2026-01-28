@@ -275,6 +275,8 @@ final class CalendarViewModel: ObservableObject {
 
         let timeStr = padKhmer(hour) + ":" + padKhmer(minute)
 
+        let englishTimeStr = String(format: "%02d:%02d", hour, minute)
+
         switch format {
         case .khmerNumeralOnly:
             menuBarText = "ថ្ងៃទី" + KhmerNumeralService.toKhmer(day) + "  " + timeStr
@@ -287,6 +289,10 @@ final class CalendarViewModel: ObservableObject {
             menuBarText = KhmerNumeralService.toKhmer(day) + " " + monthName + "  " + timeStr
         case .iconOnly:
             menuBarText = timeStr
+        case .englishFull:
+            let fmt = DateFormatter()
+            fmt.dateFormat = "MMM d"
+            menuBarText = fmt.string(from: now) + "  " + englishTimeStr
         }
     }
 
